@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: web
+    build: frontend
+    image: deepanshurawat6/web_frontend:0.1.8
+    networks:
+      - object-detection
+    environment:
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=example
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongodb
+      - yolo5
+
+  yolo5:
+    container_name: yolo5
+    build: yolo5
+    networks:
+      - object-detection
+    image: deepanshurawat6/detection-model:0.0.5
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    ports:
+      - "8081:8081"
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+
+    networks:
+      - object-detection
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+
+
+volumes:
+  mongodb:
+    driver: local
+
+networks:
+  object-detection:
+    name: object-detection
+    driver: bridge
