@@ -1,7 +1,5 @@
-FROM ...
+FROM python:3.8-slim
 
-# YOUR COMMANDS HERE
-# ....
-# ....
+
 
 CMD ["python3", "app.py"]
