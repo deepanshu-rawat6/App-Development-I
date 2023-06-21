@@ -1,1 +1,3 @@
-.telegramToken
+polybot/.telegramToken
+.idea
+.env
