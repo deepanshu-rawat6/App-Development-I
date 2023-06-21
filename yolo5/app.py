@@ -1,4 +1,8 @@
+import logging
 from pathlib import Path
+from dotenv.main import load_dotenv
+import boto3
+from botocore.exceptions import ClientError
 from flask import Flask, render_template, flash, request, redirect
 import os
 from werkzeug.utils import secure_filename
@@ -6,6 +10,7 @@ from detect import run
 import uuid
 import yaml
 from loguru import logger
+import json
 
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
@@ -15,10 +20,17 @@ logger.info(f'yolo5 is up, supported classes are:\n\n{names}')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 logger.info(f'supported files are: {ALLOWED_EXTENSIONS}')
 
+with open('config.json') as f:
+    config = json.load(f)
+
+bucket_name = config['img_bucket']
+
+load_dotenv()
+
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 app = Flask(__name__, static_url_path='')
@@ -39,7 +51,7 @@ def upload_file_api():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         p = Path(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        prediction_id = str(uuid.uuid4())   # e.g. bd65600d-8669-4903-8a14-af88203add38
+        prediction_id = str(uuid.uuid4())  # e.g. bd65600d-8669-4903-8a14-af88203add38
 
         logger.info(f'predicting {prediction_id}/{p}')
 
@@ -58,6 +70,9 @@ def upload_file_api():
 
         # TODO upload client original img (p) and predicted img (pred_result_img) to S3 using boto3
         #  reference: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html
+
+        upload_file_s3(p, bucket_name, f"original/{filename}")
+        upload_file_s3(pred_result_img, bucket_name, f"predicted/{filename}")
 
         labels = []
         if pred_result_path.exists():
@@ -78,5 +93,21 @@ def upload_file_api():
     return f'Bad file format, allowed files are {ALLOWED_EXTENSIONS}', 400
 
 
+def upload_file_s3(filename, buckets3_name, object_name):
+    if object_name is None:
+        object_name = filename
+    try:
+        response = s3_client.upload_file(filename, buckets3_name, object_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
+
+
 if __name__ == "__main__":
+    s3_client = boto3.client('s3',
+                             aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+                             aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+                             region_name=os.environ['AWS_DEFAULT_REGION']
+                             )
     app.run(host='0.0.0.0', port=8081, debug=True)
