@@ -6,12 +6,18 @@ from werkzeug.utils import secure_filename
 import requests
 from loguru import logger
 from pymongo import MongoClient, DESCENDING
+from dotenv.main import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__, static_url_path='')
 
-YOLO_URL = 'http://localhost:8081'
-MONGO_URL = 'mongodb://localhost:27017'
+# HOST_MACHINE = os.getenv('HOST_MACHINE', "localhost")
 
+YOLO_URL = f'http://yolo5:8081'
+
+
+# MONGO_URL = f'mongodb://mongodb:27017'
 
 @app.route('/', methods=['POST'])
 def upload_file():
@@ -45,7 +51,7 @@ def upload_file():
         'time': time.time()
     }
 
-    inserted_document = client['objectDetection']['predictions'].insert_one(document)
+    inserted_document = collection.insert_one(document)
     logger.info(f'inserted document id {inserted_document.inserted_id}')
 
     return render_template('result.html', filename=f'data/{filename}', summary=s, detections=detections)
@@ -58,12 +64,13 @@ def home():
 
 @app.route("/recent", methods=['GET'])
 def recent():
-    doc = client['objectDetection']['predictions'].find_one(
+    doc = collection.find_one(
         {'client_ip': request.remote_addr},
         sort=[('time', DESCENDING)])
 
     if doc:
-        return render_template('result.html', filename=f'data/{doc["filename"]}', summary=doc['summary'], detections=doc['detections'])
+        return render_template('result.html', filename=f'data/{doc["filename"]}', summary=doc['summary'],
+                               detections=doc['detections'])
 
     return render_template('result.html', filename='', summary='No recent detection found', detections={})
 
@@ -72,6 +79,12 @@ if __name__ == "__main__":
     app.config['UPLOAD_FOLDER'] = 'static/data'
 
     logger.info(f'Initializing MongoDB connection')
+    MONGO_USERNAME = os.getenv('MONGO_USERNAME', "")
+    MONGO_PASSWORD = os.getenv('MONGO_PASSWORD', "")
+    MONGO_URL = f'mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongodb:27017'
+    # client = MongoClient(MONGO_URL, username=f'{MONGO_USERNAME}', password=f'{MONGO_PASSWORD}')
     client = MongoClient(MONGO_URL)
-
+    print(MONGO_URL, MONGO_USERNAME, MONGO_PASSWORD)
+    db = client['objectDetection']
+    collection = db['predictions']
     app.run(host='0.0.0.0', port=8082, debug=True)
