@@ -51,7 +51,7 @@ def upload_file():
         'time': time.time()
     }
 
-    inserted_document = collection.insert_one(document)
+    inserted_document = client['objectDetection']['predictions'].insert_one(document)
     logger.info(f'inserted document id {inserted_document.inserted_id}')
 
     return render_template('result.html', filename=f'data/{filename}', summary=s, detections=detections)
@@ -64,7 +64,7 @@ def home():
 
 @app.route("/recent", methods=['GET'])
 def recent():
-    doc = collection.find_one(
+    doc = client['objectDetection']['predictions'].find_one(
         {'client_ip': request.remote_addr},
         sort=[('time', DESCENDING)])
 
@@ -79,12 +79,6 @@ if __name__ == "__main__":
     app.config['UPLOAD_FOLDER'] = 'static/data'
 
     logger.info(f'Initializing MongoDB connection')
-    MONGO_USERNAME = os.getenv('MONGO_USERNAME', "")
-    MONGO_PASSWORD = os.getenv('MONGO_PASSWORD', "")
-    MONGO_URL = f'mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongodb:27017'
-    # client = MongoClient(MONGO_URL, username=f'{MONGO_USERNAME}', password=f'{MONGO_PASSWORD}')
+    MONGO_URL = f'mongodb://mongodb:27017'
     client = MongoClient(MONGO_URL)
-    print(MONGO_URL, MONGO_USERNAME, MONGO_PASSWORD)
-    db = client['objectDetection']
-    collection = db['predictions']
     app.run(host='0.0.0.0', port=8082, debug=True)

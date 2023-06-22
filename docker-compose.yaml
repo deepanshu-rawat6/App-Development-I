@@ -4,12 +4,9 @@ services:
   web:
     container_name: web
     build: frontend
-    image: deepanshurawat6/web_frontend:0.1.8
+    image: deepanshurawat6/web_frontend:0.2.0
     networks:
       - object-detection
-    environment:
-      - MONGO_USERNAME=root
-      - MONGO_PASSWORD=example
     ports:
       - "8082:8082"
     depends_on:
@@ -21,7 +18,7 @@ services:
     build: yolo5
     networks:
       - object-detection
-    image: deepanshurawat6/detection-model:0.0.5
+    image: deepanshurawat6/detection-model:0.0.6
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
@@ -36,13 +33,19 @@ services:
     networks:
       - object-detection
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"
     volumes:
       - mongodb:/data/db
+      - ./mongo/data:/data/db
+
+  polybot:
+    container_name: polybot
+    image: deepanshurawat6/polybot:0.0.1
+    networks:
+      - object-detection
+    depends_on:
+      - yolo5
 
 
 volumes:
