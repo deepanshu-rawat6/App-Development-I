@@ -41,7 +41,7 @@ services:
 
   polybot:
     container_name: polybot
-    image: deepanshurawat6/polybot:0.0.1
+    image: deepanshurawat6/polybot:0.0.3
     networks:
       - object-detection
     depends_on:

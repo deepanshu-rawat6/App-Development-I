@@ -111,6 +111,7 @@ if __name__ == '__main__':
     my_bot = ObjectDetectionBot(_token)
     my_bot.start()
 
-
-# raise ConnectionError(e, request=request)
-# requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /getMe (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000025DFA0AA3D0>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+# raise ConnectionError(e, request=request) requests.exceptions.ConnectionError: HTTPSConnectionPool(
+# host='api.telegram.org', port=443): Max retries exceeded with url: /getMe (Caused by NewConnectionError(
+# '<urllib3.connection.HTTPSConnection object at 0x0000025DFA0AA3D0>: Failed to establish a new connection: [Errno
+# 11001] getaddrinfo failed'))
