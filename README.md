@@ -46,6 +46,18 @@ All configuration and integration of all microservices are done in the `docker-c
 docker-compose up
 ```
 
+## Output
+
+Although the model can detect multiple objects in the image, but sometimes it fails to classify the object correctly.
+
+### `Web UI`
+
+![Web UI](./.img/web.png)
+
+### `Telegram Bot`
+
+![Telegram Bot](./.img/bot.png)
+
 ## Deployment
 
 The application is deployed on **AWS EC2 instance**, with provided roles for accessing S3 bucket.
