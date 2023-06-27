@@ -6,7 +6,6 @@ pipeline {
         ECR_REGISTRY_URL = '854171615125.dkr.ecr.us-east-1.amazonaws.com'
         DOCKER_IMAGE_NAME = 'deepanshurawat6-detection-model'
         DOCKER_IMAGE_TAG = '0.1.0'
-        PATH = "/yolo5"
     }
     stages {
         stage('Build') {
@@ -43,7 +42,7 @@ pipeline {
         stage('Building docker image') {
             steps{
                 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                    sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
+                    sh 'docker build -t ${DOCKER_IMAGE_NAME} /yolo5'
                 }
             }
         }
