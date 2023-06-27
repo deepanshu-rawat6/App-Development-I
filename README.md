@@ -26,7 +26,7 @@ This is a lightweight Flask UI which allows users to upload images and be respon
 
 The Telegram bot service is responsible for providing a chat-based interface for users to interact with the service. 
 It utilizes the Telegram Bot API to receive user images and respond with detected objects.
-It also uses the `Yolo5` service to detect objects in the image,and upload both `orignal` and `predicted` image under an S3 Bucket object.
+It also uses the `Yolo5` service to detect objects in the image,and upload both `orignal` and `predicted` image under an AWS S3 Bucket object.
 
 ### `Yolo5`
 
