@@ -43,7 +43,7 @@ pipeline {
             steps{
                 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh '''
-                        cd /var/lib/jenkins/workspace/Yolo5Build/yolo5
+                        cd "/var/lib/jenkins/workspace/Yolo5Build/yolo5"
                         docker build -t ${DOCKER_IMAGE_NAME} .
                     '''
                 }
