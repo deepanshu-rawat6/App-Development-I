@@ -2,3 +2,4 @@ polybot/.telegramToken
 .idea
 .env
 mongo
+jenkinsToken
