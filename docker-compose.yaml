@@ -6,7 +6,8 @@ services:
     build: frontend
     image: deepanshurawat6/web_frontend:0.2.0
     networks:
-      - object-detection
+      - object-detection-private
+      - object-detection-public
     ports:
       - "8082:8082"
     depends_on:
@@ -17,7 +18,7 @@ services:
     container_name: yolo5
     build: yolo5
     networks:
-      - object-detection
+      - object-detection-private
     image: deepanshurawat6/detection-model:0.0.6
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -31,7 +32,7 @@ services:
     image: mongo:latest
 
     networks:
-      - object-detection
+      - object-detection-private
     restart: always
     ports:
       - "27017:27017"
@@ -43,7 +44,8 @@ services:
     container_name: polybot
     image: deepanshurawat6/polybot:0.0.3
     networks:
-      - object-detection
+      - object-detection-private
+      - object-detection-public
     depends_on:
       - yolo5
 
@@ -53,6 +55,10 @@ volumes:
     driver: local
 
 networks:
-  object-detection:
-    name: object-detection
+  object-detection-public:
+    name: object-detection-public
+    driver: bridge
+
+  object-detection-private:
+    name: object-detection-private
     driver: bridge

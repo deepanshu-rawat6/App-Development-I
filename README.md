@@ -52,16 +52,11 @@ Although the model can detect multiple objects in the image, but sometimes it fa
 
 ### `Web UI`
 
-<p align="center">
-  <img src=".img/web.png" height="30%" width="70%" alt="Image showing result in the Web UI"/>
-</p>
-
+![Web UI](./.img/web.png)
 
 ### `Telegram Bot`
 
-<p align="center">
-  <img src=".img/bot.png" height="30%" width="70%" alt="Image showing result in the Telegram bot"/>
-</p>
+![Telegram Bot](./.img/bot.png)
 
 ## Deployment
 
