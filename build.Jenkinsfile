@@ -9,36 +9,24 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Starting Build Pipeline') {
-            steps{
-                sh 'echo "Starting Build Pipeline"'
-            }
-        }
         stage('Connecting with AWS') {
             steps{
-                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
+                sh '''aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'''
             }
         }
         stage('Building docker image') {
             steps{
-                 sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
+                 sh '''docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'''
             }
         }
         stage('Tagging the image') {
             steps{
-                sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+                sh '''docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'''
             }
         }
         stage('Pushing to ECR') {
             steps {
-                sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-            }
-        }
-        stage('Finished with Yolo5 app') {
-            steps {
-                sh '''
-                        echo "Finished with Yolo5 app"
-                '''
+                sh '''docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'''
             }
         }
     }
