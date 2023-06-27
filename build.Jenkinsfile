@@ -9,29 +9,29 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Checkout') {
+        stage('Starting Build Pipeline') {
             steps{
-                git 'https://github.com/deepanshu-rawat6/App-Development-I.git'
+                sh 'echo "Starting Build Pipeline"'
             }
         }
         stage('Connecting with AWS') {
             steps{
-                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 854171615125.dkr.ecr.us-east-1.amazonaws.com'
+                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
             }
         }
         stage('Building docker image') {
             steps{
-                 sh 'docker build -t deepanshurawat6-detection-model ./yolo5'
+                 sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
             }
         }
         stage('Tagging the image') {
             steps{
-                sh 'docker tag deepanshurawat6-detection-model:0.1.0 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0'
+                sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
             }
         }
         stage('Pushing to ECR') {
             steps {
-                sh 'docker push 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0'
+                sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
             }
         }
         stage('Finished with Yolo5 app') {
