@@ -9,36 +9,45 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Checking on env') {
-            steps{
+        stage('Build') {
+            steps {
+                sh 'echo "Hello World"'
                 sh '''
-                echo "AWS_REGION: ${AWS_REGION}"
-                echo "ECR_REGISTRY_URL: ${ECR_REGISTRY_URL}"
-                echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
-                echo "DOCKER_IMAGE_TAG: ${DOCKER_IMAGE_TAG}"
-                echo "PATH: ${PATH}"
+                    echo "Multiline shell steps works too"
+                    ls -lah
                 '''
             }
         }
-        stage('Connecting with AWS') {
-            steps{
-                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
-            }
-        }
-        stage('Building docker image') {
-            steps{
-                 sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
-            }
-        }
-        stage('Tagging the image') {
-            steps{
-                sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-            }
-        }
-        stage('Pushing to ECR') {
-            steps {
-                sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-            }
-        }
+        // stage('Checking on env') {
+        //     steps{
+        //         sh '''
+        //         echo "AWS_REGION: ${AWS_REGION}"
+        //         echo "ECR_REGISTRY_URL: ${ECR_REGISTRY_URL}"
+        //         echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
+        //         echo "DOCKER_IMAGE_TAG: ${DOCKER_IMAGE_TAG}"
+        //         echo "PATH: ${PATH}"
+        //         '''
+        //     }
+        // }
+        // stage('Connecting with AWS') {
+        //     steps{
+        //         sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
+        //     }
+        // }
+        // stage('Building docker image') {
+        //     steps{
+        //          sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
+        //     }
+        // }
+        // stage('Tagging the image') {
+        //     steps{
+        //         sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+        //     }
+        // }
+        // stage('Pushing to ECR') {
+        //     steps {
+        //         sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+        //     }
+        // }
     }
 }
