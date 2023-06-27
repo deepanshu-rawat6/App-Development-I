@@ -9,15 +9,6 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-            }
-        }
         stage('Build Yolo5 app') {
             steps {
                 sh '''
@@ -25,6 +16,14 @@ pipeline {
                         docker build -t ${DOCKER_IMAGE_NAME} ${PATH}
                         docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTERY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
                         docker push ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+                '''
+            }
+        }
+
+        stage('Finished with Yolo5 app') {
+            steps {
+                sh '''
+                        echo "Finished with Yolo5 app"
                 '''
             }
         }
