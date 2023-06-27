@@ -33,33 +33,33 @@ pipeline {
                 }
             }
         }
-        // stage('Connecting with AWS') {
-        //     steps{
-        //         withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-        //             sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
-        //         }
-        //     }
-        // }
-        // stage('Building docker image') {
-        //     steps{
-        //         withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-        //             sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
-        //         }
-        //     }
-        // }
-        // stage('Tagging the image') {
-        //     steps{
-        //         withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-        //             sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-        //         }
-        //     }
-        // }
-        // stage('Pushing to ECR') {
-        //     steps {
-        //         withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-        //             sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
-        //         }
-        //     }
-        // }
+        stage('Connecting with AWS') {
+            steps{
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
+                }
+            }
+        }
+        stage('Building docker image') {
+            steps{
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'docker build -t ${DOCKER_IMAGE_NAME} ${PATH}'
+                }
+            }
+        }
+        stage('Tagging the image') {
+            steps{
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+                }
+            }
+        }
+        stage('Pushing to ECR') {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'docker push ${ECR_REGISTRY_NAME}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+                }
+            }
+        }
     }
 }
