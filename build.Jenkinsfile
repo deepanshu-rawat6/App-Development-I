@@ -9,7 +9,7 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Tagging the image') {
+        stage('Checking on env') {
             steps{
                 sh '''
                 echo "AWS_REGION: ${AWS_REGION}"
