@@ -9,14 +9,16 @@ pipeline {
         PATH = "./yolo5"
     }
     stages {
-        stage('Checking on env') {
-            sh '''
+        stage('Tagging the image') {
+            steps{
+                sh '''
                 echo "AWS_REGION: ${AWS_REGION}"
                 echo "ECR_REGISTRY_URL: ${ECR_REGISTRY_URL}"
                 echo "DOCKER_IMAGE_NAME: ${DOCKER_IMAGE_NAME}"
                 echo "DOCKER_IMAGE_TAG: ${DOCKER_IMAGE_TAG}"
                 echo "PATH: ${PATH}"
-            '''
+                '''
+            }
         }
         stage('Connecting with AWS') {
             steps{
