@@ -11,11 +11,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'echo "Hello World"'
+                    sh '''
+                        echo "Multiline shell steps works too"
+                        ls -lah
+                    '''
+                }
             }
         }
         // stage('Checking on env') {
