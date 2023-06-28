@@ -65,5 +65,12 @@ pipeline {
                 '''
             }
         }
+        stage('Trigger Deploy') {
+            steps {
+                build job: 'Yolo5Deploy', wait: false, parameters: [
+                    string(name: 'YOLO5_IMAGE_URL', value: "${ECR_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                ]
+            }
+        }
     }
 }
