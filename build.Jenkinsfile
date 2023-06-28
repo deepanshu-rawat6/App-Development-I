@@ -15,7 +15,6 @@ pipeline {
                     def newVersion = incremetVersion(DOCKER_IMAGE_TAG)
                     echo "New  version: ${newVersion}"
                     writeFile file: 'version.txt', text: newVersion
-                    env.DOCKER_IMAGE_TAG = readFile('version.txt').trim()
                 }
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 // }
@@ -23,7 +22,10 @@ pipeline {
         }
         stage('Checking on env') {
             steps{
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                withEnv([
+                    'PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin',
+                    "DOCKER_IMAGE_TAG = readFile('version.txt').trim()"
+                    ]) {
                     sh '''
                         echo "AWS_REGION: ${AWS_REGION}"
                         echo "ECR_REGISTRY_URL: ${ECR_REGISTRY_URL}"
