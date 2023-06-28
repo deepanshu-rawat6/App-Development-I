@@ -11,11 +11,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    def newVersion = incremetnVersion(DOCKER_IMAGE_TAG)
+                script {    
+                    def newVersion = incremetVersion(DOCKER_IMAGE_TAG)
                     echo "New  version: ${newVersion}"
-                    env.DOCKER_IMAGE_TAG = newVersion
                     writeFile file: 'version.txt', text: newVersion
+                    env.DOCKER_IMAGE_TAG = readFile('version.txt').trim()
                 }
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 // }
@@ -67,7 +67,7 @@ pipeline {
     }
 }
 
-def incremetnVersion(DOCKER_IMAGE_TAG) {
+def incremetVersion(DOCKER_IMAGE_TAG) {
     def parts = DOCKER_IMAGE_TAG.split('\\.')
     int major = parts[0] as int
     int minor = parts[1] as int
