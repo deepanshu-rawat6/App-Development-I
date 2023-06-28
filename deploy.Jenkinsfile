@@ -10,19 +10,25 @@ pipeline {
     }
     stages {
         stage('Staring the deploy process') {
-            withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'echo "Starting off the deploy process"'
                 }
+            }
         }
         stage('Connecting to the k8s cluster') {
-            withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'aws eks --region ${AWS_REGION_K8S} update-kubeconfig --name ${K8S_CLUSTER_NAME}'
                 }
+            }
         }
         stage('Setting default namespace') {
-            withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'kubectl config set-context --current --namespace=${K8S_NAMESPACE}'
                 }
+            }
         }
         stage('Deploy') {
             steps {
