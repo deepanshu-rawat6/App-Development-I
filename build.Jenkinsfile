@@ -6,7 +6,7 @@ pipeline {
         ECR_REGISTRY_URL = '854171615125.dkr.ecr.us-east-1.amazonaws.com'
         DOCKER_IMAGE_NAME = 'deepanshurawat6-detection-model'
         DOCKER_IMAGE_TAG = '0.1.0'
-        PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin
+        PATH+EXTRA='/usr/sbin:/usr/bin:/sbin:/bin'
         // PATH = '/var/lib/jenkins/workspace/Yolo5Build/yolo5'
     }
     stages {
