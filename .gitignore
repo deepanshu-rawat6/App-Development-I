@@ -3,3 +3,5 @@ polybot/.telegramToken
 .env
 mongo
 jenkinsToken
+deploy.Jenkinsfile
+yolo5-manifest.yaml
