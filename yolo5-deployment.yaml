@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yolo5-deployment
+  name: my-yolo5-deployment
 spec:
   selector:
     matchLabels:
-      app: my-yolo5
+      app: my-yolo5-app
   replicas: 1 # Update the replicas from 2 to 4
   template:
     metadata:
       labels:
-        app: my-yolo5
+        app: my-yolo5-app
     spec:
       containers:
-      - name: my-yolo5
+      - name: my-yolo5-app
         image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0
         ports:
         - containerPort: 8081
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: yolo5-service
+  name: my-yolo5-service
 spec:
   selector:
-    app: yolo5
+    app: my-yolo5-app
   ports:
     - port: 8081
       targetPort: 8081
