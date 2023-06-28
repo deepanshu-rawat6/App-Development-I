@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    parameters { string(name: 'YOLO5_IMAGE_URL', defaultValue: '', description: '') }
+    // parameters { string(name: 'YOLO5_IMAGE_URL', defaultValue: '', description: '') }
     
     environment {
         AWS_REGION_K8S = 'us-east-2'
