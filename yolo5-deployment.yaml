@@ -5,18 +5,19 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: yolo5
-  replicas: 2
+      app: my-yolo5
+  replicas: 1 # Update the replicas from 2 to 4
   template:
     metadata:
       labels:
-        app: yolo5
+        app: my-yolo5
     spec:
       containers:
-        - name: yolo5
-          image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0
-          ports:
-            - containerPort: 8081
+      - name: my-yolo5
+        image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0
+        ports:
+        - containerPort: 8081
+
 
 ---
 
