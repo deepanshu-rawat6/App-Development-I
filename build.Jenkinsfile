@@ -14,7 +14,7 @@ pipeline {
                 script {
                     def newVersion = incremetnVersion(DOCKER_IMAGE_TAG)
                     echo "New  version: ${newVersion}"
-                    DOCKER_IMAGE_TAG = newVersion
+                    env.DOCKER_IMAGE_TAG = newVersion
                     writeFile file: 'version.txt', text: newVersion
                 }
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
