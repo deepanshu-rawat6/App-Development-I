@@ -34,7 +34,7 @@ pipeline {
             steps {
                 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                    sh '''
-                        cd "/var/lib/jenkins/workspace/Yolo5Build"
+                        cd "/var/lib/jenkins/workspace/Yolo5Build/k8s"
 
                         kubectl apply -f yolo5-deployment.yaml
                    '''
