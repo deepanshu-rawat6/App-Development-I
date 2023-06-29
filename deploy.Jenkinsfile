@@ -16,41 +16,41 @@ pipeline {
     stages {
         stage('Staring the deploy process') {
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'echo "Starting off the deploy process"'
-                }
+                // }
             }
         }
         stage('Connecting to the k8s cluster') {
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'aws eks --region ${AWS_REGION_K8S} update-kubeconfig --name ${K8S_CLUSTER_NAME}'
-                }
+                // }
             }
         }
         stage('Setting default namespace') {
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'kubectl config set-context --current --namespace=${K8S_NAMESPACE}'
-                }
+                // }
             }
         }
         stage('Deploying on k8s') {
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                    sh '''
-                        cd "/var/lib/jenkins/workspace/Yolo5Build/k8s"
+                        cd "k8s"
 
                         kubectl apply -f yolo5-deployment.yaml
                    '''
-                }
+                // }
             }
         }
         stage('Finishing the deploy process') {
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                    sh 'echo "Finishing off the deploy process" '
-                }
+                // }
             }
         }
     }
