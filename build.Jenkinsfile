@@ -1,6 +1,10 @@
 pipeline {
-    agent any
-
+    agent {
+    docker {
+            image '<image-url>'
+            args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     environment {
         AWS_REGION = 'us-east-1'
         ECR_REGISTRY_URL = '854171615125.dkr.ecr.us-east-1.amazonaws.com'
