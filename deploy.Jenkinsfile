@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploying on k8s') {
             steps {
                 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                    sh '''
@@ -38,6 +38,13 @@ pipeline {
 
                         kubectl apply -f yolo5-deployment.yaml
                    '''
+                }
+            }
+        }
+        stage('Finishing the deploy process') {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                   sh 'echo "Finishing off the deploy process" '
                 }
             }
         }
