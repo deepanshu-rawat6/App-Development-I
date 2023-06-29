@@ -36,7 +36,7 @@ pipeline {
                    sh '''
                         cd "/var/lib/jenkins/workspace/Yolo5Build/k8s"
 
-                        kubectl apply -f yolo5-deployment.yaml --namespace=${K8S_NAMESPACE}
+                        kubectl apply -f yolo5-deployment.yaml
                    '''
                 }
             }
