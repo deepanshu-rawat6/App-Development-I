@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this project, you are going to design and deploy an image detection service that consists of multiple containers.
+In this project, I built a simple object detection service using the Yolo5 deep learning model with other micro-services.
 
 The application allows users to upload images and respond with objects that the service detected in the image. Users can interact with the application through a simple web UI or an interactive Telegram bot to obtain object detection results.
 
