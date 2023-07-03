@@ -19,11 +19,14 @@ services:
     build: yolo5
     networks:
       - object-detection-private
-    image: deepanshurawat6/detection-model:0.0.6
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    image: deepanshurawat6/detection-model:0.1.0
+#   For local dev testing
+#    environment:
+#      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+#      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+#      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+
+#   For production -> no environment variables
     ports:
       - "8081:8081"
 
@@ -42,7 +45,14 @@ services:
 
   polybot:
     container_name: polybot
-    image: deepanshurawat6/polybot:0.0.3
+    image: deepanshurawat6/polybot:0.1.0
+#    For local dev testing
+#    volumes:
+#      - ./polybot/.telegramToken:/app/.telegramToken:ro
+
+#    For production
+    volumes:
+      - .telegramToken:/app/.telegramToken:ro
     networks:
       - object-detection-private
       - object-detection-public
