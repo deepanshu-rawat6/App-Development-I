@@ -35,7 +35,7 @@ and upload both `orignal` and `predicted` image under an S3 Bucket object.
 
 ### `MongoDB`
 
-MongoDB service is used to store persistent data.
+MongoDB service is used to store persistent data by using bind mounts
 
 ## Using the application
 
