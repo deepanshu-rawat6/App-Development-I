@@ -1,5 +1,5 @@
 import unittest
-from app import allowed_file, ALLOWED_EXTENSIONS
+from utils import allowed_file, ALLOWED_EXTENSIONS
 
 
 class TestBacklogPerInstanceMetric(unittest.TestCase):
@@ -10,4 +10,3 @@ class TestBacklogPerInstanceMetric(unittest.TestCase):
     def test_invalid_filename(self):
         self.assertFalse(allowed_file(f'file'))
         self.assertFalse(allowed_file(f'file.csv'))
-
