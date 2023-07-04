@@ -6,14 +6,15 @@ pipeline {
             stages{
                 stage("Installing dependencies") {
                     steps {
-                        sh 'cd yolo5'
-                        sh 'pip install -r requirements.txt'
+                        sh 'pip install -r yolo5/requirements.txt'
                     }
                 }
                 stage("Run testcases") {
                     steps {
-                        sh 'cd tests'
-                        sh 'python3 -m pytest --junitxml results.xml tests'
+                        sh '''
+                            cd tests
+                            python3 -m pytest --junitxml results.xml tests
+                        '''
                     }
                     post {
                         always {
