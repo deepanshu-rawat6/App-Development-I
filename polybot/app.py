@@ -107,7 +107,8 @@ class ObjectDetectionBot(Bot):
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
-
+    
+    print(_token)
     my_bot = ObjectDetectionBot(_token)
     my_bot.start()
 
