@@ -17,8 +17,8 @@ with open("data/coco128.yaml", "r") as stream:
 
 logger.info(f'yolo5 is up, supported classes are:\n\n{names}')
 
-# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-# logger.info(f'supported files are: {ALLOWED_EXTENSIONS}')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+logger.info(f'supported files are: {ALLOWED_EXTENSIONS}')
 
 with open('config.json') as f:
     config = json.load(f)
@@ -28,9 +28,9 @@ bucket_name = config['img_bucket']
 load_dotenv()
 
 
-# def allowed_file(filename):
-#     return '.' in filename and \
-#         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 app = Flask(__name__, static_url_path='')
