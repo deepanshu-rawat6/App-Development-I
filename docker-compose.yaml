@@ -45,12 +45,12 @@ services:
 
   polybot:
     container_name: polybot
-    image: deepanshurawat6/polybot:0.1.0
-#    For local dev testing
-#    volumes:
+    image: deepanshurawat6/polybot:0.1.1
+#   For local dev testing
+#   volumes:
 #      - ./polybot/.telegramToken:/app/.telegramToken:ro
 
-#    For production
+#   For production
     volumes:
       - .telegramToken:/app/.telegramToken:ro
     networks:
