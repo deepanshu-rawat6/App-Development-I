@@ -8,8 +8,8 @@ The application allows users to upload images and respond with objects that the 
 
 The service consists of 4 microservices:
 
-* Telegram Bot container.
-* Web UI container.
+* Telegram Bot container to interact with the service.
+* Web UI container to interact with the service.
 * Image prediction container based on the Yolo5 pre-train deep learning model.
 * MongoDB container to store clients data.
 
