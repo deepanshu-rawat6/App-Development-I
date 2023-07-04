@@ -32,7 +32,7 @@ pipeline {
                 // }
             }
         }
-        stage('Connecting with AWS CLI') {
+        stage('Connecting with ECR') {
             steps{
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}'
