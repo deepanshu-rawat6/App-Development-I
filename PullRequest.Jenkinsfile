@@ -4,12 +4,6 @@ pipeline {
     stages {
         stage('Unittest') {
             stages{
-                stage("Installing pip") {
-                    steps {
-                        sh 'sudo apt update'
-                        sh 'sudo apt install python3-pip'
-                    }
-                }
                 stage("Installing dependencies") {
                     steps {
                         sh 'cd yolo5'
