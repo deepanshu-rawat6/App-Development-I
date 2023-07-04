@@ -12,7 +12,7 @@ pipeline {
                 stage("Run testcases") {
                     steps {
                         sh '''
-                            cd tests
+                            cd yolo5
                             python3 -m pytest --junitxml results.xml tests
                         '''
                     }
