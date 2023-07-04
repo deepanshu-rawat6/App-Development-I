@@ -13,7 +13,7 @@ pipeline {
         DOCKER_IMAGE_TAG = '0.1.0'
     }
     stages {
-        stage('Build') {
+        stage('Starting Build') {
             steps {
                 // withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                     sh 'echo "Starting off the build process"'
