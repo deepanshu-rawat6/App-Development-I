@@ -60,5 +60,5 @@ Although the model can detect multiple objects in the image, but sometimes it fa
 
 ## Deployment
 
-The application is deployed on **AWS EC2 instance** and **K8S**, with provided roles for accessing S3 bucket.
+The application is deployed on **AWS EC2 instance** and **K8S**, with provided roles for accessing S3 bucket and ECR.
 
