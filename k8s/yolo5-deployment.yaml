@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-yolo5-deployment
+  name: yolo5-deployment
 spec:
   selector:
     matchLabels:
-      app: my-yolo5-app
+      app: yolo5
   replicas: 1 # Update the replicas from 2 to 4
   template:
     metadata:
       labels:
-        app: my-yolo5-app
+        app: yolo5
     spec:
       containers:
-        - name: my-yolo5-app
+        - name: yolo5
           image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0
           resources:
             requests:
               cpu: 1000m
             limits:
-              memory: 1024Mi
               cpu: 1000m
           ports:
             - containerPort: 8081
@@ -28,24 +27,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-yolo5-service
+  name: yolo5-service
 spec:
   selector:
-    app: my-yolo5-app
+    app: yolo5
   ports:
-    - port: 8081
+    - protocol: TCP
+      port: 8081
       targetPort: 8081
 
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: my-yolo5-hpa
+  name: yolo5-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: my-yolo5-deployment
+    name: yolo5-deployment
   minReplicas: 1
   maxReplicas: 5
   metrics:
@@ -54,4 +54,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageValue: 500m
