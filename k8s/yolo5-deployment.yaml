@@ -17,9 +17,10 @@ spec:
           image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-detection-model:0.1.0
           resources:
             requests:
-              cpu: 1000mi
+              cpu: 1000m
             limits:
-              cpu: 1000mi
+              memory: 1024Mi
+              cpu: 1000m
           ports:
             - containerPort: 8081
 
