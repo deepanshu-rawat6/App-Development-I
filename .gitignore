@@ -3,3 +3,5 @@ polybot/.telegramToken
 .env
 mongo
 jenkinsToken
+jenkins/pipeline/frontend
+jenkins/pipeline/polybot
