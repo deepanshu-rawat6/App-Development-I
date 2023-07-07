@@ -18,8 +18,10 @@ spec:
           resources:
             requests:
               cpu: 500m
+              memory: 1Gi
             limits:
               cpu: 1000m
+              memory: 1Gi
           ports:
             - containerPort: 8081
 
@@ -37,7 +39,7 @@ spec:
       targetPort: 8081
 
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: yolo5-hpa
@@ -48,10 +50,4 @@ spec:
     name: yolo5-deployment
   minReplicas: 1
   maxReplicas: 5
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageValue: 500m
+  targetCPUUtilizationPercentage: 50

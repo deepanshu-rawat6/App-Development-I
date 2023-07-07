@@ -5,3 +5,4 @@ mongo
 jenkinsToken
 jenkins/pipeline/frontend
 jenkins/pipeline/polybot
+k8s/polybot-deployment.yaml
