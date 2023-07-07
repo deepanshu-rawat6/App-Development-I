@@ -50,4 +50,4 @@ spec:
     name: yolo5-deployment
   minReplicas: 1
   maxReplicas: 5
-  targetCPUUtilizationPercentage: 50
+  targetCPUUtilization: 50
