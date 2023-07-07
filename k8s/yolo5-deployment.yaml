@@ -49,5 +49,11 @@ spec:
     kind: Deployment
     name: yolo5-deployment
   minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilization: 50
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
