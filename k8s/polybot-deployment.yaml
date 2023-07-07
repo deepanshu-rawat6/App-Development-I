@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: polybot-creds
+data:
+  username: am9obg==
+  password: Mzk1MjgkdmRnN0pi
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,11 +39,3 @@ spec:
          secret:
            secretName: .telegramToken
 
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: polybot-creds
-data:
-  username: am9obg==
-  password: Mzk1MjgkdmRnN0pi

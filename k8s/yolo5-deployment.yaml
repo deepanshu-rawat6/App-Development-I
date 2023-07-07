@@ -39,7 +39,7 @@ spec:
       targetPort: 8081
 
 ---
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: yolo5-hpa
