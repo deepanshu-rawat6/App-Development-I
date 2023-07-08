@@ -3,8 +3,7 @@ kind: Secret
 metadata:
   name: polybot-creds
 data:
-  username: am9obg==
-  password: Mzk1MjgkdmRnN0pi
+  token: NjA4NzU2MDgwMTpBQUZHdWFSekFMU3B3TmhNLVZTTjdmZHlOVzNvZURKdWstMA==
 
 ---
 apiVersion: apps/v1
@@ -23,19 +22,20 @@ spec:
     spec:
       containers:
         - name: polybot
-          image: <URL>
+          image: 854171615125.dkr.ecr.us-east-1.amazonaws.com/deepanshurawat6-polybot:0.1.0
           resources:
             requests:
               cpu: 500m
+              memory: 0.5Gi
             limits:
               cpu: 1000m
+              memory: 1Gi
           volumeMounts:
-            - name: .telegramToken
+            - name: telegramtoken
               mountPath: /app/.telegramToken
               readOnly: true
               subPath: token
-    volumes:
-       - name: .telegramToken
-         secret:
-           secretName: .telegramToken
-
+      volumes:
+        - name: telegramtoken
+          secret:
+            secretName: polybot-creds
