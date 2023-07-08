@@ -11,7 +11,7 @@ import uuid
 import yaml
 from loguru import logger
 import json
-from utils import ALLOWED_EXTENSIONS, allowed_file
+# from utils import ALLOWED_EXTENSIONS, allowed_file
 
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
